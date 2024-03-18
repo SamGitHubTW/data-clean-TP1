@@ -30,8 +30,13 @@ def load_formatted_data(data_fname:str) -> pd.DataFrame:
     """
     df = pd.read_csv(data_fname)
     df= df.astype(str)
-    df.iloc[:, -2:] = df.iloc[:, -2:].apply(pd.to_numeric, errors='coerce')
-    df.iloc[:, -3] = pd.to_datetime(df.iloc[:, -3], errors='coerce')
+    pd.to_numeric(df['lat_coor1'], errors='coerce').astype('float')
+    pd.to_numeric(df['long_coor1'], errors='coerce').astype('float')
+    pd.to_datetime(
+    df.dermnt, 
+    errors='coerce',
+    format='%Y-%m-%d')
+    
     return df
 
 
