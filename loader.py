@@ -3,35 +3,35 @@ import requests
 import numpy as np
 import pandas as pd
 
-DATA_PATH = 'data/MMM_MMM_DAE.csv'
+DATA_PATH = 'data/sample_dirty.csv'
 
-def download_data(url, force_download=False, ):
-    # Utility function to donwload data if it is not in disk
-    data_path = os.path.join('data', os.path.basename(url.split('?')[0]))
-    if not os.path.exists(data_path) or force_download:
-        # ensure data dir is created
-        os.makedirs('data', exist_ok=True)
-        # request data from url
-        response = requests.get(url, allow_redirects=True)
-        # save file
-        with open(data_path, "w") as f:
-            # Note the content of the response is in binary form: 
-            # it needs to be decoded.
-            # The response object also contains info about the encoding format
-            # which we use as argument for the decoding
-            f.write(response.content.decode(response.apparent_encoding))
+# def download_data(url, force_download=False, ):
+#     # Utility function to donwload data if it is not in disk
+#     data_path = os.path.join('data', os.path.basename(url.split('?')[0]))
+#     if not os.path.exists(data_path) or force_download:
+#         # ensure data dir is created
+#         os.makedirs('data', exist_ok=True)
+#         # request data from url
+#         response = requests.get(url, allow_redirects=True)
+#         # save file
+#         with open(data_path, "w") as f:
+#             # Note the content of the response is in binary form: 
+#             # it needs to be decoded.
+#             # The response object also contains info about the encoding format
+#             # which we use as argument for the decoding
+#             f.write(response.content.decode(response.apparent_encoding))
 
-    return data_path
+    # return data_path
 
 
 def load_formatted_data(data_fname:str) -> pd.DataFrame:
     """ One function to read csv into a dataframe with appropriate types/formats.
         Note: read only pertinent columns, ignore the others.
     """
-    df = pd.read_csv(
-        data_fname,
-        ...
-        )
+    df = pd.read_csv(data_fname)
+    df= df.astype(str)
+    df.iloc[:, -2:] = df.iloc[:, -2:].apply(pd.to_numeric, errors='coerce')
+    df.iloc[:, -3] = pd.to_datetime(df.iloc[:, -3], errors='coerce')
     return df
 
 
@@ -60,6 +60,6 @@ def load_clean_data(data_path:str=DATA_PATH)-> pd.DataFrame:
     return df
 
 
-# if the module is called, run the main loading function
-if __name__ == '__main__':
-    load_clean_data(download_data())
+# # if the module is called, run the main loading function
+# if __name__ == '__main__':
+#     load_clean_data(download_data())
