@@ -421,7 +421,7 @@ def sample_framed() -> pd.DataFrame:
                            43.6020241317034,
                            43.5911769531706,
                            43.5995832643803]},
-        dtype={'Adress': 'string', 'tel1': 'string', 
+        dtype={'nom': 'string', 'Adress': 'string', 'tel1': 'string', 
                'freq_mnt': 'string', 'dermnt': 'string', 
                'lat_coor1': 'float', 'long_coor1': 'float'},
     )
