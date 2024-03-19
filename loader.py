@@ -5,6 +5,7 @@ import pandas as pd
 
 DATA_PATH = 'data/sample_dirty.csv'
 
+
 # def download_data(url, force_download=False, ):
 #     # Utility function to donwload data if it is not in disk
 #     data_path = os.path.join('data', os.path.basename(url.split('?')[0]))
@@ -43,14 +44,26 @@ def load_formatted_data(data_fname:str) -> pd.DataFrame:
 # once they are all done, call them in the general sanitizing function
 def sanitize_data(df:pd.DataFrame) -> pd.DataFrame:
     """ One function to do all sanitizing"""
-    ...
+    have_dash = df.tel1 == '-'
+    have_dash1 = df.adr_num == '-'
+    have_dash2 = df.adr_voie == '-'
+    has_zero = df.com_cp == '0'
+    
+    df.tel1[have_dash].isna()
+    
+    df.adr_num[have_dash].isna()
+    
+    df.adr_voie[have_dash].isna()
+    
+    df.com_cp[has_zero].isna()
+
     return df
 
 
 # Define a framing function
 def frame_data(df:pd.DataFrame) -> pd.DataFrame:
     """ One function all framing (column renaming, column merge)"""
-    df.rename(...)
+    df.rename()
     ...
     return df
 
@@ -65,6 +78,7 @@ def load_clean_data(data_path:str=DATA_PATH)-> pd.DataFrame:
     return df
 
 
-# # if the module is called, run the main loading function
-# if __name__ == '__main__':
-#     load_clean_data(download_data())
+ # if the module is called, run the main loading function
+
+df=load_clean_data(DATA_PATH)
+print(df)
